@@ -13,6 +13,9 @@
 		45C417B8224F6CA200B56ECD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45C417B7224F6CA200B56ECD /* Assets.xcassets */; };
 		45C417BB224F6CA200B56ECD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45C417B9224F6CA200B56ECD /* LaunchScreen.storyboard */; };
 		45C417C32252529900B56ECD /* AddToDoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C417C22252529900B56ECD /* AddToDoController.swift */; };
+		45CC67E922577CFF00A81356 /* CoreDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CC67E822577CFF00A81356 /* CoreDataProvider.swift */; };
+		45CC67EC22577FB200A81356 /* CommonToDo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CC67EA22577FB200A81356 /* CommonToDo+CoreDataClass.swift */; };
+		45CC67ED22577FB200A81356 /* CommonToDo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CC67EB22577FB200A81356 /* CommonToDo+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,9 @@
 		45C417BA224F6CA200B56ECD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		45C417BC224F6CA200B56ECD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		45C417C22252529900B56ECD /* AddToDoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToDoController.swift; sourceTree = "<group>"; };
+		45CC67E822577CFF00A81356 /* CoreDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataProvider.swift; sourceTree = "<group>"; };
+		45CC67EA22577FB200A81356 /* CommonToDo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommonToDo+CoreDataClass.swift"; sourceTree = "<group>"; };
+		45CC67EB22577FB200A81356 /* CommonToDo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommonToDo+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +62,9 @@
 		45C417AC224F6CA100B56ECD /* Todolist */ = {
 			isa = PBXGroup;
 			children = (
+				45CC67EA22577FB200A81356 /* CommonToDo+CoreDataClass.swift */,
+				45CC67EB22577FB200A81356 /* CommonToDo+CoreDataProperties.swift */,
+				45CC67E822577CFF00A81356 /* CoreDataProvider.swift */,
 				45C417AD224F6CA100B56ECD /* AppDelegate.swift */,
 				45C417AF224F6CA100B56ECD /* ToDoViewController.swift */,
 				45C417C22252529900B56ECD /* AddToDoController.swift */,
@@ -137,9 +146,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45CC67E922577CFF00A81356 /* CoreDataProvider.swift in Sources */,
 				45C417B0224F6CA100B56ECD /* ToDoViewController.swift in Sources */,
+				45CC67ED22577FB200A81356 /* CommonToDo+CoreDataProperties.swift in Sources */,
 				45C417C32252529900B56ECD /* AddToDoController.swift in Sources */,
 				45C417B6224F6CA100B56ECD /* To_do_list.xcdatamodeld in Sources */,
+				45CC67EC22577FB200A81356 /* CommonToDo+CoreDataClass.swift in Sources */,
 				45C417AE224F6CA100B56ECD /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

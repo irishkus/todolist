@@ -7,15 +7,15 @@
 //
 
 import UIKit
+import CoreData
 
 class ToDoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    lazy var importantToDo = ["Сходить к врачу", "Сдать книги в библиотеку", "Сходить на молочную кухню"]
-    lazy var commonToDo = ["Соблюдать диету", "Почитать про Core Data", "Закупиться в магазине", "Отвести детей в сад", "Ложиться спать вовремя"]
-    lazy var inconsiderableToDo = ["Пить побольше воды", "Есть 5 раз в день"]
+    lazy var importantToDo : [String] = []
+    lazy var commonToDo : [String] = []
+    lazy var inconsiderableToDo : [String] = []
     lazy var toDoList = [importantToDo, commonToDo, inconsiderableToDo]
     let cellID = "cellID"
-    
     
     var allToDoListTableView: UITableView = {
         let tableView = UITableView()
@@ -24,6 +24,7 @@ class ToDoViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("DidLoad")
         allToDoListTableView.frame = view.frame
         allToDoListTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
         allToDoListTableView.delegate = self
@@ -37,6 +38,14 @@ class ToDoViewController: UIViewController, UITableViewDelegate, UITableViewData
         view.addSubview(allToDoListTableView)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        importantToDo = CoreDataProvider.coreDataLoad(important: 0)
+        commonToDo = CoreDataProvider.coreDataLoad(important: 1)
+        inconsiderableToDo = CoreDataProvider.coreDataLoad(important: 2)
+        toDoList = [importantToDo, commonToDo, inconsiderableToDo]
+        allToDoListTableView.reloadData()
+    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return toDoList.count
     }
@@ -48,7 +57,6 @@ class ToDoViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = allToDoListTableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
         cell.textLabel?.text = toDoList[indexPath.section][indexPath.row]
-        // cell.accessoryType = .checkmark
         return cell
     }
     
@@ -64,13 +72,9 @@ class ToDoViewController: UIViewController, UITableViewDelegate, UITableViewData
             return "Другое"
         }
     }
-    
+      
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        if allToDoListTableView.isEditing == true {
-            return true
-        } else {
-            return false
-        }
+        return true
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
@@ -80,6 +84,7 @@ class ToDoViewController: UIViewController, UITableViewDelegate, UITableViewData
                 configurationHandler.text = self.toDoList[indexPath.section][indexPath.row]
             }
             let actionOK = UIAlertAction(title: "Сохранить", style: .default, handler: { (alertAction) in
+                CoreDataProvider.coreDataUpdate(important: Int16(indexPath.section), changeToDo: self.toDoList[indexPath.section][indexPath.row], newToDo: alter.textFields?.first?.text ?? self.toDoList[indexPath.section][indexPath.row])
                 self.toDoList[indexPath.section][indexPath.row] = alter.textFields?.first?.text ?? self.toDoList[indexPath.section][indexPath.row]
                 tableView.reloadData()
             })
@@ -90,6 +95,7 @@ class ToDoViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         editButton.backgroundColor = UIColor.green
         let deleteButton = UITableViewRowAction(style: .normal, title: "Удалить") { (rowAction, indexPath) in
+            CoreDataProvider.coreDataDelete(important: Int16(indexPath.section), toDo: self.toDoList[indexPath.section][indexPath.row])
             self.toDoList[indexPath.section].remove(at: indexPath.row)
             self.allToDoListTableView.deleteRows(at: [indexPath], with: .fade)
             tableView.reloadData()
@@ -100,10 +106,18 @@ class ToDoViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         allToDoListTableView.beginUpdates()
+        
         let deleteToDo = toDoList[sourceIndexPath.section].remove(at: sourceIndexPath.row)
+        CoreDataProvider.coreDataDelete(important: Int16(sourceIndexPath.section), toDo: deleteToDo)
+        CoreDataProvider.coreDataSave(important: Int16(destinationIndexPath.section), toDo: deleteToDo)
         toDoList[destinationIndexPath.section].insert(deleteToDo, at: destinationIndexPath.row)
+        
         allToDoListTableView.endUpdates()
         tableView.reloadData()
+    }
+
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .none
     }
     
     @objc func editButtonTapped(button: UIButton) {
@@ -117,5 +131,6 @@ class ToDoViewController: UIViewController, UITableViewDelegate, UITableViewData
     @objc func addButtonTapped(button: UIButton) {
         navigationController?.pushViewController(AddToDoController(), animated: true)    
     }
+    
 }
 

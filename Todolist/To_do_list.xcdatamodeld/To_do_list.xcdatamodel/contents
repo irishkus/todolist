@@ -1,4 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18D109" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CommonToDo" representedClassName="CommonToDo" syncable="YES">
+        <attribute name="important" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="toDo" optional="YES" attributeType="String" customClassName="[String]" syncable="YES"/>
+    </entity>
+    <entity name="ImportantToDo" representedClassName="ImportantToDo" syncable="YES">
+        <attribute name="toDo" optional="YES" attributeType="Transformable" customClassName="[String]" syncable="YES"/>
+    </entity>
+    <entity name="InconsiderableToDo" representedClassName="InconsiderableToDo" syncable="YES">
+        <attribute name="toDo" optional="YES" attributeType="Transformable" customClassName="[String]" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="CommonToDo" positionX="337.80859375" positionY="-46.3828125" width="128" height="75"/>
+        <element name="ImportantToDo" positionX="-80.62890625" positionY="-64.27734375" width="128" height="60"/>
+        <element name="InconsiderableToDo" positionX="86.2421875" positionY="-40.421875" width="128" height="58"/>
+    </elements>
 </model>

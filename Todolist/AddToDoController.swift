@@ -7,8 +7,18 @@
 //
 
 import UIKit
+import CoreData
 
 class AddToDoController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+    
+    let labelHeadline = UILabel()
+    let labelName = UILabel()
+    let textFieldName = UITextField()//frame: CGRect(x: 20, y: 100, width: 300, height: 40))
+    let labelImportance = UILabel()
+    let pickerViewImportance = UIPickerView()
+    let buttonSave = UIButton()
+    let buttonCancel = UIButton()
+    var important: Int16 = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,13 +32,7 @@ class AddToDoController: UIViewController, UIPickerViewDataSource, UIPickerViewD
     }
     
     func addElements() {
-        let labelHeadline = UILabel()
-        let labelName = UILabel()
-        let textFieldName = UITextField()//frame: CGRect(x: 20, y: 100, width: 300, height: 40))
-        let labelImportance = UILabel()
-        let pickerViewImportance = UIPickerView()
-        let buttonSave = UIButton()
-        let buttonCancel = UIButton()
+
         pickerViewImportance.delegate = self
         pickerViewImportance.dataSource = self
         view.addSubview(labelHeadline)
@@ -59,7 +63,8 @@ class AddToDoController: UIViewController, UIPickerViewDataSource, UIPickerViewD
         textFieldName.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 130.0).isActive = true
         textFieldName.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20.0).isActive = true
         textFieldName.heightAnchor.constraint(equalToConstant: 30.0).isActive = true
-        textFieldName.borderStyle = UITextField.BorderStyle.line
+        //textFieldName.borderStyle = UITextField.BorderStyle.line
+        textFieldName.backgroundColor = #colorLiteral(red: 0.9633289637, green: 0.9633289637, blue: 0.9633289637, alpha: 1)
         textFieldName.placeholder = "Введите название"
         textFieldName.clearButtonMode = UITextField.ViewMode.whileEditing
         textFieldName.allowsEditingTextAttributes = true
@@ -79,7 +84,7 @@ class AddToDoController: UIViewController, UIPickerViewDataSource, UIPickerViewD
         buttonCancel.widthAnchor.constraint(equalToConstant: 90.0).isActive = true
         buttonCancel.heightAnchor.constraint(equalToConstant: 30.0).isActive = true
         buttonSave.setTitle("Сохранить", for: .normal)
-        buttonCancel.addTarget(self, action: #selector(buttonTappedSave(button:)), for: .touchUpInside)  //(button:, newToDo))
+        buttonSave.addTarget(self, action: #selector(buttonTappedSave(button:)), for: .touchUpInside)  //(button:, newToDo))
         buttonSave.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
         buttonSave.topAnchor.constraint(equalTo: labelImportance.bottomAnchor, constant: 100.0).isActive = true
         buttonSave.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 220.0).isActive = true
@@ -109,30 +114,23 @@ class AddToDoController: UIViewController, UIPickerViewDataSource, UIPickerViewD
         }
     }
     
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        important = Int16(row)
+    }
+    
     @objc func buttonTappedCancel(button: UIButton) {
         navigationController?.popViewController(animated: true)
     }
     
     @objc func buttonTappedSave(button: UIButton) {
-        
+        guard let textFieldName = textFieldName.text else { preconditionFailure("Text Field is nil") }
+        CoreDataProvider.coreDataSave(important: important,toDo: textFieldName)
         navigationController?.popViewController(animated: true)
     }
     
-    @objc func dismissKeyboard()
-    {
+    @objc func dismissKeyboard() {
         view.endEditing(true)
     }
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-  //          let addToDoController : AddToDoController = segue.destination as! AddToDoController
-  //          let toDoController = segue.source as! ToDoViewController
-          //  addToDoController.button
-//        if let indexPath = myFriendsController.tableView.indexPathForSelectedRow {
-//            if searchActive {
-//                arrayMyFriendsCharacter = []
-//                for user in arrayFilteredFriends! {
-//                    arrayMyFriendsCharacter.append(user.name)
-//                }
-//            }
-   // }
+
 }
