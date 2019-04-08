@@ -13,7 +13,7 @@ class AddToDoController: UIViewController, UIPickerViewDataSource, UIPickerViewD
     
     let labelHeadline = UILabel()
     let labelName = UILabel()
-    let textFieldName = UITextField()//frame: CGRect(x: 20, y: 100, width: 300, height: 40))
+    let textFieldName = UITextField()
     let labelImportance = UILabel()
     let pickerViewImportance = UIPickerView()
     let buttonSave = UIButton()
@@ -32,7 +32,6 @@ class AddToDoController: UIViewController, UIPickerViewDataSource, UIPickerViewD
     }
     
     func addElements() {
-
         pickerViewImportance.delegate = self
         pickerViewImportance.dataSource = self
         view.addSubview(labelHeadline)
